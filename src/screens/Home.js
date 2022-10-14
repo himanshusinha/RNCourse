@@ -8,21 +8,19 @@ import {
   SafeAreaView,
   Platform,
   FlatList,
-  TouchableOpacity,
 } from 'react-native';
-
+import GoalInput from '../components/GoalInput';
+import GoalItem from '../components/GoalItem';
 const Home = () => {
-  const [enteredGoalText, setEnteredGoalText] = useState('');
   const [courseGoals, setCourseGoals] = useState([]);
-
-  const goalInputHandler = enteredText => {
-    setEnteredGoalText(enteredText);
-  };
-  const addGoalHandler = () => {
+  const addGoalHandler = enteredGoalText => {
     setCourseGoals(currentCourseGoals => [
       ...currentCourseGoals,
       {text: enteredGoalText, id: Math.random().toString()},
     ]);
+  };
+  const onDeleteHandler = () => {
+    console.log('DELETE');
   };
   return (
     <SafeAreaView>
@@ -33,32 +31,20 @@ const Home = () => {
           flexDirection: 'row',
           justifyContent: 'space-around',
         }}>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your goals ..."
-          onChangeText={goalInputHandler}
-        />
-        <View>
-          <Button
-            style={{width: '30%'}}
-            title="Add Goals"
-            onPress={addGoalHandler}
-          />
-        </View>
+        <GoalInput onAddGoal={addGoalHandler} />
       </View>
       <View style={styles.goalsContainer}>
         <FlatList
           data={courseGoals}
           renderItem={itemData => {
             return (
-              <TouchableOpacity>
-                <View style={styles.goalItem}>
-                  <Text style={styles.goalTitle}>{itemData.item.text}</Text>
-                </View>
-              </TouchableOpacity>
+              <GoalItem
+                text={itemData.item.text}
+                onDeleteItem={onDeleteHandler}
+              />
             );
           }}
-          keyExtractor={(item, index) => {
+          keyExtractor={item => {
             return item.id;
           }}
           alwaysBounceVertical={false}
@@ -75,27 +61,9 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderColor: 'blue',
   },
-  input: {
-    borderWidth: 1,
-    borderColor: 'black',
-    marginTop: 20,
-    width: '70%',
-    height: Platform.OS === 'ios' ? 45 : 45,
-    marginVertical: 10,
-    paddingStart: 10,
-  },
+
   goalsContainer: {
     marginTop: 10,
-  },
-  goalItem: {
-    padding: 10,
-    margin: 10,
-    borderRadius: 10,
-    color: '#fff',
-    backgroundColor: '#5e0acc',
-  },
-  goalTitle: {
-    color: 'white',
   },
 });
 export default Home;
