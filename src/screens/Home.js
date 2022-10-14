@@ -7,30 +7,36 @@ import {
   TextInput,
   SafeAreaView,
   Platform,
+  FlatList,
+  TouchableOpacity,
 } from 'react-native';
-const Home = () => {
-  const [enteredText, setEnteredText] = useState('');
 
-  const addGoalHandler = () => {
-    console.log(enteredText);
+const Home = () => {
+  const [enteredGoalText, setEnteredGoalText] = useState('');
+  const [courseGoals, setCourseGoals] = useState([]);
+
+  const goalInputHandler = enteredText => {
+    setEnteredGoalText(enteredText);
   };
-  const inputHandler = text => {
-    setEnteredText(text);
+  const addGoalHandler = () => {
+    setCourseGoals(currentCourseGoals => [
+      ...currentCourseGoals,
+      {text: enteredGoalText, id: Math.random().toString()},
+    ]);
   };
   return (
     <SafeAreaView>
       <View
         style={{
-          marginHorizontal: 20,
-          justifyContent: 'center',
+          marginHorizontal: 10,
           alignItems: 'center',
           flexDirection: 'row',
-          justifyContent: 'space-between',
+          justifyContent: 'space-around',
         }}>
         <TextInput
           style={styles.input}
           placeholder="Enter your goals ..."
-          onChangeText={inputHandler}
+          onChangeText={goalInputHandler}
         />
         <View>
           <Button
@@ -39,6 +45,24 @@ const Home = () => {
             onPress={addGoalHandler}
           />
         </View>
+      </View>
+      <View style={styles.goalsContainer}>
+        <FlatList
+          data={courseGoals}
+          renderItem={itemData => {
+            return (
+              <TouchableOpacity>
+                <View style={styles.goalItem}>
+                  <Text style={styles.goalTitle}>{itemData.item.text}</Text>
+                </View>
+              </TouchableOpacity>
+            );
+          }}
+          keyExtractor={(item, index) => {
+            return item.id;
+          }}
+          alwaysBounceVertical={false}
+        />
       </View>
     </SafeAreaView>
   );
@@ -58,7 +82,20 @@ const styles = StyleSheet.create({
     width: '70%',
     height: Platform.OS === 'ios' ? 45 : 45,
     marginVertical: 10,
-    paddingStart: 20,
+    paddingStart: 10,
+  },
+  goalsContainer: {
+    marginTop: 10,
+  },
+  goalItem: {
+    padding: 10,
+    margin: 10,
+    borderRadius: 10,
+    color: '#fff',
+    backgroundColor: '#5e0acc',
+  },
+  goalTitle: {
+    color: 'white',
   },
 });
 export default Home;
