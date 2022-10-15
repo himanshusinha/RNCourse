@@ -1,38 +1,46 @@
 import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Button,
-  TextInput,
-  SafeAreaView,
-  Platform,
-  FlatList,
-} from 'react-native';
+import {StyleSheet, View, FlatList, Button} from 'react-native';
 import GoalInput from '../components/GoalInput';
 import GoalItem from '../components/GoalItem';
+
 const Home = () => {
+  const [modalIsVisible, setModalIsVisible] = useState(false);
   const [courseGoals, setCourseGoals] = useState([]);
+
+  const startAddGoalHandler = () => {
+    setModalIsVisible(true);
+  };
+
+  const endAddGoalHandler = () => {
+    setModalIsVisible(false);
+  };
+
   const addGoalHandler = enteredGoalText => {
     setCourseGoals(currentCourseGoals => [
       ...currentCourseGoals,
       {text: enteredGoalText, id: Math.random().toString()},
     ]);
+    endAddGoalHandler();
   };
-  const onDeleteHandler = () => {
-    console.log('DELETE');
+
+  const deleteGoalHandler = id => {
+    setCourseGoals(currentCourseGoals => {
+      return currentCourseGoals.filter(goal => goal.id !== id);
+    });
   };
+
   return (
-    <SafeAreaView>
-      <View
-        style={{
-          marginHorizontal: 10,
-          alignItems: 'center',
-          flexDirection: 'row',
-          justifyContent: 'space-around',
-        }}>
-        <GoalInput onAddGoal={addGoalHandler} />
-      </View>
+    <View style={styles.appContainer}>
+      <Button
+        title="Add New Goal"
+        color="#5e0acc"
+        onPress={startAddGoalHandler}
+      />
+      <GoalInput
+        visible={modalIsVisible}
+        onAddGoal={addGoalHandler}
+        onCancel={endAddGoalHandler}
+      />
       <View style={styles.goalsContainer}>
         <FlatList
           data={courseGoals}
@@ -40,30 +48,30 @@ const Home = () => {
             return (
               <GoalItem
                 text={itemData.item.text}
-                onDeleteItem={onDeleteHandler}
+                id={itemData.item.id}
+                onDeleteItem={deleteGoalHandler}
               />
             );
           }}
-          keyExtractor={item => {
+          keyExtractor={(item, index) => {
             return item.id;
           }}
           alwaysBounceVertical={false}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
-const styles = StyleSheet.create({
-  titleStyle: {
-    fontSize: 16,
-    padding: 10,
-    borderWidth: 1,
-    marginVertical: 10,
-    borderColor: 'blue',
-  },
 
+const styles = StyleSheet.create({
+  appContainer: {
+    flex: 1,
+    paddingTop: 50,
+    paddingHorizontal: 16,
+    backgroundColor: '#311b6b',
+  },
   goalsContainer: {
-    marginTop: 10,
+    flex: 5,
   },
 });
 export default Home;
