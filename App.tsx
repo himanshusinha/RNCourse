@@ -1,16 +1,12 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from './src/screens/home/HomeScreen';
-const Stack = createNativeStackNavigator();
-
-const App = () => {
+import "./global.css"
+import { Text, View } from "react-native";
+ 
+export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Home" component={HomeScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <View className="flex-1 items-center justify-center bg-red-400">
+      <Text className="text-4xl font-bold text-white">
+        Welcome to Nativewind!
+      </Text>
+    </View>
   );
-};
-
-export default App;
+}
