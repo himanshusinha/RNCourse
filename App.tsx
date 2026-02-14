@@ -1,12 +1,14 @@
-import "./global.css"
-import { Text, View } from "react-native";
- 
+import { NavigationContainer } from '@react-navigation/native';
+import './global.css';
+import BottomTabNavigator from './src/navigations/BottomTabNavigator';
+import DrawerNavigation from './src/navigations/DrawerNavigator';
+
 export default function App() {
   return (
-    <View className="flex-1 items-center justify-center bg-red-400">
-      <Text className="text-4xl font-bold text-white">
-        Welcome to Nativewind!
-      </Text>
-    </View>
+    <>
+      <NavigationContainer>
+        <DrawerNavigation />
+      </NavigationContainer>
+    </>
   );
 }

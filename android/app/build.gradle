@@ -76,8 +76,20 @@ android {
     ndkVersion rootProject.ext.ndkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
-
     namespace "com.rncourse"
+   
+    packagingOptions {
+        jniLibs {
+            pickFirsts += [
+                'lib/x86/libc++_shared.so',
+                'lib/x86_64/libjsc.so',
+                'lib/arm64-v8a/libjsc.so',
+                'lib/arm64-v8a/libc++_shared.so',
+                'lib/x86_64/libc++_shared.so',
+                'lib/armeabi-v7a/libc++_shared.so'
+            ]
+        }
+    }
     defaultConfig {
         applicationId "com.rncourse"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -117,3 +129,8 @@ dependencies {
         implementation jscFlavor
     }
 }
+project.ext.vectoricons = [
+    iconFontNames: [ 'MaterialIcons.ttf', 'EvilIcons.ttf' ] // Specify font files
+]
+
+apply from: file("../../node_modules/react-native-vector-icons/fonts.gradle")
