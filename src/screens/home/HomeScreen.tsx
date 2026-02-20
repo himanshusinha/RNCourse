@@ -1,34 +1,17 @@
 import React, { FC } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import styles from './styles';
-import { Text, View } from 'react-native';
-
-const data = [
-  'very very long text',
-  'long text',
-  'demo text',
-  'demo flex wrap  text list',
-];
+import { ClassComponent } from '../../components/class&functional/ClassComponent';
+import FunctionalComponent from '../../components/class&functional/FunctionalComponent';
+import State from '../../components/class&functional/State';
 
 const HomeScreen: FC = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ flexWrap: 'wrap', flexDirection: 'row' }}>
-        {data.map((item, index) => {
-          return (
-            <View
-              style={{
-                borderColor: 'black',
-                backgroundColor: 'orange',
-                margin: 10,
-                padding: 10,
-              }}
-            >
-              <Text>{item}</Text>
-            </View>
-          );
-        })}
-      </View>
+      {/* <HooksTopicsScreen /> */}
+      {/* <ClassComponent /> */}
+      {/* <FunctionalComponent /> */}
+      <State />
     </SafeAreaView>
   );
 };
