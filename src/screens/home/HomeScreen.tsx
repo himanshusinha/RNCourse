@@ -4,6 +4,10 @@ import styles from './styles';
 import { ClassComponent } from '../../components/class&functional/ClassComponent';
 import FunctionalComponent from '../../components/class&functional/FunctionalComponent';
 import State from '../../components/class&functional/State';
+import CounterComponent from '../../components/class&functional/CounterComponent';
+import CategoriesDemo from '../../components/Hooks/demo/CategoriesDemo';
+import OrientationListener from '../../components/Hooks/demo/ListenersDemo';
+import TimersDemo from '../../components/Hooks/demo/TimersDemo';
 
 const HomeScreen: FC = () => {
   return (
@@ -11,7 +15,11 @@ const HomeScreen: FC = () => {
       {/* <HooksTopicsScreen /> */}
       {/* <ClassComponent /> */}
       {/* <FunctionalComponent /> */}
-      <State />
+      {/* <State /> */}
+      {/* <CounterComponent /> */}
+      {/* <CategoriesDemo /> */}
+      {/* <OrientationListener /> */}
+      <TimersDemo />
     </SafeAreaView>
   );
 };
